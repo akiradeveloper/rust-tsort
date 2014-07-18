@@ -1,3 +1,5 @@
+require "benchmark"
+
 OFFSET = 10000
 N = 10
 
@@ -23,10 +25,13 @@ task "run_tests"
 NEW_IMPL="tsort"
 REF_IMPL="tsort"
 def run_test(n)
-  f = "TEST#{n}"
-  a = `#{NEW_IMPL} #{f} 2>/dev/null`
-  b = `#{REF_IMPL} #{f} 2>/dev/null`
-  raise "result not same" unless a == b
+  f = "TEST#{n} "
+  print f
+  a = ""; b = ""
+  t_new = Benchmark.realtime { a = `#{NEW_IMPL} #{f} 2>/dev/null` }
+  t_ref = Benchmark.realtime { b = `#{REF_IMPL} #{f} 2>/dev/null` }
+  print "result: #{(a == b) ? "OK" : "NG"}, time: t_new/t_ref=#{t_new}/#{t_ref}"
+  puts
 end
 
 `ls TEST*`.split.each do |t|
