@@ -41,7 +41,7 @@ end
 
 desc "run all tests"
 task "run_tests" do
-  print "failures=#{$failures}\nmax ratio=#{$max_ratio}\min ratio=#{$min_ratio}\nave ratio=#{$ratios.average}\nstd dev=#{$ratios.standard_deviation}\n"
+  print "failures=#{$failures}\nmax ratio=#{$max_ratio}\nmin ratio=#{$min_ratio}\nave ratio=#{$ratios.average}\nstd dev=#{$ratios.standard_deviation}\n"
 end
 
 NEW_IMPL="tsort"
