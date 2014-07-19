@@ -44,8 +44,8 @@ task "run_tests" do
   print "failures=#{$failures}\nmax ratio=#{$max_ratio}\nmin ratio=#{$min_ratio}\nave ratio=#{$ratios.average}\nstd dev=#{$ratios.standard_deviation}\n"
 end
 
-NEW_IMPL="~/coreutils/build/tsort"
-# NEW_IMPL="tsort"
+# NEW_IMPL="~/coreutils/build/tsort"
+NEW_IMPL="tsort"
 REF_IMPL="tsort"
 def run_test(n)
   f = "TEST#{n} "
@@ -54,7 +54,9 @@ def run_test(n)
   t_new = Benchmark.realtime { a = `#{NEW_IMPL} #{f} 2>/dev/null` }
   t_ref = Benchmark.realtime { b = `#{REF_IMPL} #{f} 2>/dev/null` }
   success = a == b
-  print "result: #{success ? "OK" : "NG"}, time: t_new/t_ref=#{t_new}/#{t_ref}\n"
+
+  acyclic = `#{REF_IMPL} #{f} 1>/dev/null 2>&1; echo $?`.to_i == 0
+  print "result: #{success ? "OK" : "NG"}, acyclic:#{acyclic}, time: t_new/t_ref=#{t_new}/#{t_ref}\n"
 
   $failures << n unless success
   ratio = t_new / t_ref
