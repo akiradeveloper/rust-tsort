@@ -14,12 +14,20 @@ task "gen_rand_tests" do
     n = OFFSET + i
     `python gen-rand-graph.py > TEST#{n}`
   end
+  N.times do |i|
+    n = OFFSET + OFFSET + i
+    `python gen-rand-dag.py > TEST#{n}`
+  end
 end
 
 desc "purge random tests"
 task "del_rand_tests" do
   N.times do |i|
     n = OFFSET + i
+    `rm TEST#{n}`
+  end
+  N.times do |i|
+    n = OFFSET + OFFSET + i
     `rm TEST#{n}`
   end
 end
