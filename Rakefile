@@ -20,7 +20,7 @@ task "gen_rand_tests" do
   end
   [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000].each_with_index do |v, i|
     n = 3 * OFFSET + i
-    `./gen-rand-dag #{v} > TEST#{n}`
+    sh "./gen-rand-dag #{v} > TEST#{n}"
   end
 end
 
