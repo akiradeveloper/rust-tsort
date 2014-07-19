@@ -15,20 +15,20 @@ task "gen_rand_tests" do
     `python gen-rand-graph.py > TEST#{n}`
   end
   N.times do |i|
-    n = OFFSET + OFFSET + i
-    `python gen-rand-dag.py > TEST#{n}`
+    n = 2 * OFFSET + i
+    `./gen-rand-dag #{rand(10..1000)} > TEST#{n}`
+  end
+  [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000].each_with_index do |v, i|
+    n = 3 * OFFSET + i
+    `./gen-rand-dag #{v} > TEST#{n}`
   end
 end
 
 desc "purge random tests"
 task "del_rand_tests" do
-  N.times do |i|
-    n = OFFSET + i
-    `rm TEST#{n}`
-  end
-  N.times do |i|
-    n = OFFSET + OFFSET + i
-    `rm TEST#{n}`
+  `ls TEST*`.split.each do |t| 
+    n = t[4..-1].to_i
+    `rm TEST#{n}` if n >= OFFSET
   end
 end
 
@@ -67,6 +67,9 @@ def run_test(n)
   print "result: #{success ? "OK" : "NG"}, acyclic:#{acyclic}, time: t_new/t_ref=#{t_new}/#{t_ref}\n"
 
   $failures << n unless success
+
+  return if n < 3 * OFFSET 
+
   ratio = t_new / t_ref
   $ratios << ratio
   $max_ratio = [ratio, $max_ratio].max

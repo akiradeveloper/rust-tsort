@@ -1,7 +1,11 @@
 import pygraph.algorithms.generators as Gen
 import random
+import sys
 
 n = random.randint(10, 1000)
+if len(sys.argv) >= 2:
+	n = int(sys.argv[1])
+
 # e = n * (n-1) / 2 # number of edges
 perms = list(range(0, n))
 random.shuffle(perms)
