@@ -18,7 +18,10 @@ task "gen_rand_tests" do
     n = 2 * OFFSET + i
     `./gen-rand-dag #{rand(10..1000)} > TEST#{n}`
   end
-  [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000].each_with_index do |v, i|
+  # can't allocate the memory for N=50000
+  # [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000].each_with_index do |v, i|
+  # 5000 is big enough to see the scalability
+  [10, 20, 50, 100, 200, 500, 1000, 2000, 5000].each_with_index do |v, i|
     n = 3 * OFFSET + i
     sh "./gen-rand-dag #{v} > TEST#{n}"
   end
