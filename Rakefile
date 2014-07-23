@@ -55,7 +55,8 @@ task "run_tests" do
   print "failures=#{$failures}\nmax ratio=#{$max_ratio}\nmin ratio=#{$min_ratio}\nave ratio=#{$ratios.average}\nstd dev=#{$ratios.standard_deviation}\n"
 end
 
-NEW_IMPL="~/coreutils/build/tsort"
+NEW_IMPL="~/go-coreutils/tsort/tsort"
+# NEW_IMPL="~/coreutils/build/tsort"
 # NEW_IMPL="tsort"
 REF_IMPL="tsort"
 def run_test(n)
